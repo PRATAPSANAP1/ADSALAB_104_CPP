@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+int arr[6]={1, 1, 1, 0, 0, 0};
+int n=sizeof(arr) / sizeof(arr[0]);
+int low=0, high=n-1, mid;
+int firstZeroIndex=-1;
+while(low<=high) {
+mid=(low+high) / 2;
+if (arr[mid]==0) {
+firstZeroIndex=mid;
+high=mid-1;
+} else {
+low=mid+1;
+}
+}
+
+int countZeros;
+if(firstZeroIndex==-1)
+{
+countZeros=0;  
+}
+else
+{
+countZeros=n-firstZeroIndex;
+}
+cout << "Number of zero's are: " << countZeros << endl;
+return 0;
+}

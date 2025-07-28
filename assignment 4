@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int maxCrossingSum(vector<int>& arr, int left, int mid, int right) {
+int left_sum = INT_MIN;
+int sum = 0;
+for (int i = mid; i >= left; i--) {
+sum += arr[i];
+if (sum > left_sum)
+left_sum = sum;
+}
+
+int right_sum = INT_MIN;
+sum = 0;
+for (int i = mid + 1; i <= right; i++) {
+sum += arr[i];
+if (sum > right_sum)
+right_sum = sum;
+}
+
+return left_sum + right_sum;
+}
+
+int maxSubArray(vector<int>& arr, int left, int right) {
+if (left == right)
+return arr[left];
+
+int mid = (left + right) / 2;
+
+int left_max = maxSubArray(arr, left, mid);
+int right_max = maxSubArray(arr, mid + 1, right);
+int cross_max = maxCrossingSum(arr, left, mid, right);
+
+return max({left_max, right_max, cross_max});
+}
+
+int main() {
+vector<int> arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+int n = arr.size();
+int max_sum = maxSubArray(arr, 0, n - 1);
+cout << "Maximum Subarray Sum = " << max_sum << endl;
+return 0;
+}

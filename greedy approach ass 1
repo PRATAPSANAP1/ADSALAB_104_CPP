@@ -1,0 +1,44 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main()
+{
+    int k,n;
+    vector<pair<int,int>>visit;
+    cout<<"Enter the Number of Shops:";
+    cin>>n;
+    cout<<"Enter the Number of Person:";
+    cin>>k;
+    int start,end;
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Enter the Time(Start,End) for Shop"<<i+1<<": ";
+        cin>>start>>end;
+        visit.push_back(make_pair(start, end));
+    }
+   sort(visit.begin(),visit.end(),[](pair<int,int>a,pair<int,int>b)
+{
+    return a.second<b.second;
+});
+    int track[k];
+    for(int i=0;i<k;i++)
+    {
+        track[i]=0;
+    }
+    int count=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<k;j++)
+        {
+            if(visit[i].first>=track[j])
+            {
+                track[j]=visit[i].second;
+                count=count+1;
+                break;
+            }
+        }
+    }
+    cout<<"Maximum Shop visited:"<<count;
+return 0;
+}
